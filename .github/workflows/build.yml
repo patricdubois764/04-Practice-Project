@@ -1,8 +1,8 @@
-name: Test
+name: Build
 
 on:
   workflow_run:
-    workflows: ["Build"]   # <- muss exakt dem name: aus lint.yml entsprechen
+    workflows: ["Lint"]   # <- muss exakt dem name: aus lint.yml entsprechen
     types:
       - completed
 jobs:
