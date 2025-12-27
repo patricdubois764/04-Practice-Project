@@ -1,0 +1,23 @@
+name: Test
+
+on:
+  workflow_run:
+    workflows: ["Lint"]   # <- muss exakt dem name: aus lint.yml entsprechen
+    types:
+      - completed
+jobs:
+  test:
+    # Nur starten, wenn Lint erfolgreich war
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+
+      - run: npm ci
+      - run: npm test
